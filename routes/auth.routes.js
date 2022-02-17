@@ -108,13 +108,21 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 ///////////////////////////// LOGOUT ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
+
+router.get("/user-profile", isLoggedIn, (req, res) => {
+  const id= req.session.currentUser
+  User.find(id)
+  .then((user)=>{
+    res.render("users/user-profile");
+  })
+  
+});
+
+
 router.post("/logout", isLoggedIn, (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
 
-router.get("/user-profile", isLoggedIn, (req, res) => {
-  res.render("users/user-profile");
-});
 
 module.exports = router;
